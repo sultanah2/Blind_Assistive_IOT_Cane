@@ -1,20 +1,70 @@
 # Blind Assistive IoT Cane (Smart Cane System)
 
-##  1. Project Overview & Abstract
-Independent mobility is one of the major daily challenges faced by visually impaired individuals, especially in unfamiliar or dynamic environments. Traditional white canes help users detect immediate, low-level obstacles but completely lack advanced features for communication, remote safety, and real-time navigation. 
+---
 
-To solve these critical issues, this project introduces an integrated **Smart Cane System**—an embedded IoT solution designed to elevate the safety, independence, and confidence of visually impaired users. 
+##  Motivation & Humanitarian Impact
+Independence is one of the greatest challenges faced by visually impaired individuals in their daily lives. Traditional white canes, while useful, cannot detect obstacles above ground level or provide real-time remote assistance during emergencies. 
 
-The system operates on two core pillars:
-* Obstacle Detection and Proximity Alert Utilizing ultrasonic sensors to gauge distance from objects and triggering a buzzer with multi-level frequency beeps to alert the user dynamically.
-* Emergency Alert System (Wireless Communication) Integrating a GPS module for precise location tracking paired with an HC-05 Bluetooth module. When an emergency push-button is pressed, the cane instantly extracts coordinates, generates a Google Maps link, and transmits a "HELP!" message directly to a companion smartphone.
+This project was born out of a humanitarian vision: to leverage modern IoT technology to enhance mobility, ensure safety, and give visually impaired individuals the confidence to navigate the world independently. By combining obstacle detection with immediate location-sharing capabilities, this Smart Cane acts as a reliable companion, bridging the gap between technology and human empathy.
 
 ---
 
-##  2. Project Objectives
-* Design and build an affordable, responsive smart cane to assist visually impaired individuals.
-* Enable active, real-time obstacle detection using ultrasonic waves.
-* Provide clear, varying auditory alerts (sound frequencies) based on obstacle distance.
-* Track and extract precise user coordinates (Latitude and Longitude) using GPS.
-* Deliver instant emergency SMS/messages with Google Maps integration via Bluetooth communication.
-* Enhance user autonomy, safety, and daily mobility.
+An IoT-based Smart Cane system designed to assist visually impaired individuals in navigating their surroundings safely. The project integrates obstacle detection, auditory feedback, and a one-touch emergency location tracking system.
+
+---
+
+##  Hardware Components
+* Microcontroller: Arduino Compatible Board
+* Distance Sensor: HC-SR04 Ultrasonic Sensor (Obstacle Detection)
+* Audio Feedback: Active Buzzer (Proximity Alerts)
+* Wireless Communication: HC-05 Bluetooth Module (Data Streaming)
+* Location Tracking: NEO-6M GPS Module (NMEA Parsing)
+* Input Device: Emergency Push Button (Tactile Switch)
+
+---
+
+##  Features & Architecture
+
+### 1. Obstacle Detection & Auditory Feedback
+The system continuously measures distance using the Ultrasonic sensor (`TRIG: Pin 2`, `ECHO: Pin 3`). It provides dynamic auditory feedback via the buzzer (`Pin 4`) based on proximity zones:
+* Critical Zone (0 - 30 cm): High-frequency urgent alerts.
+* Warning Zone (30 - 70 cm): Moderate frequency tones.
+* Safe Zone (> 70 cm): Buzzer remains idle.
+
+### 2. GPS Tracking & NMEA Parsing
+The NEO-6M GPS module is connected via Software Serial (`TX: Pin 6`, RX: Pin 7`). The system listens continuously to raw NMEA sentences, specifically isolating `$GPRMC strings to convert raw coordinate formats into standard 6-decimal point precision latitude and longitude values.
+
+### 3. Emergency Push Button Polling
+A physical push button (`Pin 5`) utilizes the microcontroller's internal pull-up resistor. When the button is pressed (State transition from HIGH to `LOW`), it instantly triggers the emergency subroutine to stream the exact real-time coordinates over the Bluetooth TX buffer.
+
+---
+
+##  Repository Structure
+
+* Smart_Cane_Code.ino - The core firmware code handling sensor logic, GPS data streams, and emergency alerts.
+* block_diagram.png - Structural system architecture showing hardware interconnections.
+* flowchart.png - Logical execution flow of the firmware script from initialization to polling loops.
+* prototype.jpg - Image showing the physical hardware layout and prototype assembly.
+
+---
+
+##  Getting Started
+
+### Pin Mapping Reference
+| Component | Arduino Pin | Mode |
+| --- | --- | --- |
+| TRIG (Ultrasonic) | Pin 2 | OUTPUT |
+| ECHO (Ultrasonic) | Pin 3 | INPUT |
+| BUZZER | Pin 4 | OUTPUT |
+| BUTTON | Pin 5 | INPUT_PULLUP |
+| TX_GPS (Software Serial) | Pin 6 | INPUT (Receives from GPS TX) |
+| RX_GPS (Software Serial) | Pin 7 | OUTPUT (Connects to GPS RX) |
+
+### How to Flash the Firmware
+1. Open Smart_Cane_Code.ino using the Arduino IDE.
+2. Ensure the SoftwareSerial library is available (built-in by default).
+3. Select your board type and the correct COM port.
+4. Click Verify to compile, then Upload to flash the code onto the microcontroller.
+
+---
+Developed as a collaborative course project.
