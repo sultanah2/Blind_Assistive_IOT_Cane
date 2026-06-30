@@ -1,7 +1,5 @@
 # Blind Assistive IoT Cane (Smart Cane System)
 
----
-
 ##  Motivation & Humanitarian Impact
 Independence is one of the greatest challenges faced by visually impaired individuals in their daily lives. Traditional white canes, while useful, cannot detect obstacles above ground level or provide real-time remote assistance during emergencies. 
 
@@ -39,12 +37,16 @@ A physical push button (`Pin 5`) utilizes the microcontroller's internal pull-up
 
 ---
 
-##  Repository Structure
+##  System Diagrams & Prototype
 
-* Smart_Cane_Code.ino - The core firmware code handling sensor logic, GPS data streams, and emergency alerts.
-* block_diagram.png - Structural system architecture showing hardware interconnections.
-* flowchart.png - Logical execution flow of the firmware script from initialization to polling loops.
-* prototype.jpg - Image showing the physical hardware layout and prototype assembly.
+### 1. System Block Diagram
+![System Block Diagram](block_diagram.png)
+
+### 2. Project Flowchart
+![Project Flowchart](flowchart.png)
+
+### 3. Hardware Prototype Layout
+![Hardware Prototype](prototype.jpg)
 
 ---
 
@@ -67,4 +69,4 @@ A physical push button (`Pin 5`) utilizes the microcontroller's internal pull-up
 4. Click Verify to compile, then Upload to flash the code onto the microcontroller.
 
 ---
-Developed as a collaborative course project.
+*Developed as a collaborative course project.*
